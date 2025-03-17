@@ -1,0 +1,36 @@
+
+        body {
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            background-color: #2d6a4f;
+            min-height: 100vh;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #40916c;
+        }
+        .header, .footer {
+            background-color: #1b4332;
+            color: white;
+            padding: 10px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .dropdown-menu {
+            background-color: #f8f9fa !important; /* Light background */
+        }
+        .dropdown-item {
+            color: black !important; /* Black text */
+        }
+        .dropdown-item:hover {
+            background-color: #e9ecef !important; /* Slightly darker on hover */
+        }
+        
+   
