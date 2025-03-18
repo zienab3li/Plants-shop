@@ -27,7 +27,10 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                     data-price="<?php echo $product['price']; ?>">
                                 Add to Cart
                             </button>
+                            <?php if(!isset($_SESSION['user'])) : ?>
 
+                                <button class="btn btn-secondary w-100" disabled>Please login/signup</button>
+                                <?php endif; ?>
                             <?php else : ?>
                                 <button class="btn btn-secondary w-100" disabled>Out of Stock</button>
                                 <?php endif; ?>
