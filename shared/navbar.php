@@ -28,6 +28,7 @@ $cartCount = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart']
                 </div>
             <a href="./logout.php" class="btn btn-success ms-3">Log Out</a>
             <a href="./profile.php" class="btn btn-success ms-3"><?=$_SESSION['user_name']?></a>
+            <a href="./orders.php" class="btn btn-success ms-3">My Orders</a>
             <?php else:?>
             <a href="./register.php" class="btn btn-success ms-3">Sign Up</a>
             <a href="./login.php" class="btn btn-success ms-3">Log In</a>
