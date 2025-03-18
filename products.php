@@ -22,7 +22,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <small class="text-muted">Stock: <?php echo $product['stock']; ?></small>
                         <div class="mt-auto">
                         <?php if ($product['stock'] > 0) : ?>
-                            <a href="add_to_cart.php?id=<?php echo $product['id']; ?>" class="btn btn-success w-100">Add to Cart</a>
+                            <a href="?id=<?php echo $product['id']; ?>" class="btn btn-success w-100">Add to Cart</a>
                             <?php else : ?>
                                 <button class="btn btn-secondary w-100" disabled>Out of Stock</button>
                                 <?php endif; ?>
