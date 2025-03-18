@@ -1,6 +1,6 @@
 <?php
 session_start();
-$cartCount = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
+$cartCount = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'], 'quantity')) : 0;
 ?>
 
 
@@ -19,7 +19,7 @@ $cartCount = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
             </ul>
             <?php if(isset($_SESSION['user'])):?>
                 <div class="ms-auto">
-                    <a href="cart.php" class="btn btn-outline-success position-relative">
+                    <a href="/projects/MY_SHOP/cart.php" class="btn btn-outline-success position-relative">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
                             <?php echo $cartCount; ?>
