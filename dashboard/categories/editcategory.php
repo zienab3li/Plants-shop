@@ -3,6 +3,10 @@ require_once "../shared/header.php";
 require_once "../shared/navbar.php";
 require_once "../shared/sidebar.php";
 require_once "../../app/dbconfig.php";
+if (!isset($_SESSION['user']) || $_SESSION['user_role'] !== 'admin') {
+    echo "<script> window.location.href='../error.php';</script>";
+    exit;
+}
 $name="";
 if(isset($_GET['edit'])){
     $id = $_GET['edit'];

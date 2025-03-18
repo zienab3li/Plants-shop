@@ -1,5 +1,9 @@
 <?php
 require_once "../../app/dbconfig.php";
+if (!isset($_SESSION['user']) || $_SESSION['user_role'] !== 'admin') {
+    echo "<script> window.location.href='../error.php';</script>";
+    exit;
+}
 
 if (isset($_GET['id'])) {
     $order_id = $_GET['id'];

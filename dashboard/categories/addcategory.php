@@ -1,8 +1,13 @@
 <?php
+
 require_once "../shared/header.php";
 require_once "../shared/navbar.php";
 require_once "../shared/sidebar.php";
 require_once "../../app/dbconfig.php";
+if (!isset($_SESSION['user']) || $_SESSION['user_role'] !== 'admin') {
+    echo "<script> window.location.href='../error.php';</script>";
+    exit;
+}
 if(isset($_POST['submit'])){
     $name = $_POST['name'];
     $insertQuery="INSERT INTO categories (name) VALUES ('$name')";
