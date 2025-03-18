@@ -24,6 +24,7 @@ $select=mysqli_fetch_all($result,MYSQLI_ASSOC);
                     <th>Product Name</th>
                     <th>Category Name</th>
                     <th>Price</th>
+                    <th>Image</th>
                     <th>Quantity</th>
                    
                     <th>Actions</th>
@@ -36,9 +37,10 @@ $select=mysqli_fetch_all($result,MYSQLI_ASSOC);
                     <td><?= $pro['name']?></td>
                     <td><?= $pro['category_id']?></td>
                     <td><?= $pro['price']?></td>
+                    <td><img src="../assets/images/<?= htmlspecialchars($pro['image']); ?>" alt="" width="50"></td>
                     <td><?= $pro['stock']?></td>
                    <td>
-                    <a href="editproegory.php?edit=<?= $pro['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="edit.php?edit=<?= $pro['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
                     <a href="?delete=<?= $pro['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this proegory?')">Delete</a>
                     </td>
                 </tr>
