@@ -51,7 +51,7 @@ $(document).ready(function() {
         let productPrice = $(this).data("price");
 
         $.ajax({
-            url: "/projects/MY_SHOP/add-to-cart.php",  // Adjust based on your project structure
+            url: "add-to-cart.php",  // Adjust based on your project structure
     method: "POST",
     data: {
         product_id: productId,
