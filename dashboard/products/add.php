@@ -9,6 +9,12 @@ require_once "../../app/dbconfig.php";
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Create images directory if it doesn't exist
+$upload_dir = __DIR__ . "/../assets/images";
+if (!file_exists($upload_dir)) {
+    mkdir($upload_dir, 0777, true);
+}
+
 // Fetch categories
 $selectQuery = "SELECT * FROM categories";
 $result = mysqli_query($conn, $selectQuery);
@@ -31,20 +37,20 @@ if (isset($_POST['submit'])) {
 
         if (in_array($imageExt, $allowedExts)) {
             $newImageName = uniqid("product_", true) . "." . $imageExt;
-            $path = "/var/www/html/projects/MY_SHOP/dashboard/assets/images/" . $newImageName; // Fixed path
+            $path = $upload_dir . "/" . $newImageName;
 
             if (move_uploaded_file($image_tmp, $path)) {
                 $insertQuery = "INSERT INTO products (name, description, price, category_id, stock, image) 
                                 VALUES ('$name', '$description', $price, $category_id, $stock, '$newImageName')";
 
                 if (mysqli_query($conn, $insertQuery)) {
-                    echo "<div class='alert alert-success'>Product added successfully!</div>";
-                    header("Location: list.php");
+                    echo "<script>window.location.href = 'list.php';</script>";
+                    exit();
                 } else {
                     echo "<div class='alert alert-danger'>Database Error: " . mysqli_error($conn) . "</div>";
                 }
             } else {
-                echo "<div class='alert alert-danger'>Failed to upload image.</div>";
+                echo "<div class='alert alert-danger'>Failed to upload image. Error: " . error_get_last()['message'] . "</div>";
             }
         } else {
             echo "<div class='alert alert-danger'>Invalid file type. Only JPG, JPEG, PNG are allowed.</div>";

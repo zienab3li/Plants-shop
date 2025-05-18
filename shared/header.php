@@ -1,5 +1,6 @@
 <?php
-session_start();
+require_once __DIR__ . '/../app/session.php';
+start_session_if_not_started();
 ?>
 <!DOCTYPE html>
 <html lang="en">

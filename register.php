@@ -40,7 +40,7 @@ if(isset($_POST['register'])){
                 $mail->isHTML(true);
                 $mail->Subject = 'Verify Your Email';
                 $mail->Body = "Click the link below to verify your email:<br>
-                               <a href='http://192.168.1.14/projects/MY_SHOP/verify.php?token=$verificationToken'>Verify Email</a>";
+                               <a href='http://192.168.1.14/Plants-shop/verify.php?token=$verificationToken'>Verify Email</a>";
 
                 $mail->send();
                 $successMessage = "Registration successful! Check your email for verification.";

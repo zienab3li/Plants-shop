@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 $cartCount = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'], 'quantity')) : 0;
 ?>
 
@@ -19,14 +19,14 @@ $cartCount = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart']
             </ul>
             <?php if(isset($_SESSION['user'])):?>
                 <div class="ms-auto">
-                    <a href="../cart.php" class="btn btn-outline-success position-relative">
+                    <a href="/Plants-shop/cart.php" class="btn btn-outline-success position-relative">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
                             <?php echo $cartCount; ?>
                         </span>
                     </a>
                 </div>
-            <a href="../logout.php" class="btn btn-success ms-3">Log Out</a>
+            <a href="/Plants-shop/logout.php" class="btn btn-success ms-3">Log Out</a>
             <a href="./profile.php" class="btn btn-success ms-3"><?=$_SESSION['user_name']?></a>
             <a href="./orders.php" class="btn btn-success ms-3">My Orders</a>
             <?php else:?>

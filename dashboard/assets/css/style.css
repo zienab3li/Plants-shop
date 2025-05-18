@@ -1,36 +1,286 @@
+:root {
+    --primary-color: hsl(148, 29%, 24%);
+    --secondary-color: hsl(148, 29%, 24%);
+    --dark-color: hsl(148, 29%, 24%);
+    --light-color: #ecf0f1;
+    --danger-color: #e74c3c;
+    --warning-color: #f1c40f;
+    --sidebar-width: 250px;
+}
 
-        body {
-            background-color: #f8f9fa;
-        }
-        .sidebar {
-            background-color: #2d6a4f;
-            min-height: 100vh;
-        }
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            display: block;
-        }
-        .sidebar a:hover {
-            background-color: #40916c;
-        }
-        .header, .footer {
-            background-color: #1b4332;
-            color: white;
-            padding: 10px;
-        }
-        .content {
-            padding: 20px;
-        }
-        .dropdown-menu {
-            background-color: #f8f9fa !important; /* Light background */
-        }
-        .dropdown-item {
-            color: black !important; /* Black text */
-        }
-        .dropdown-item:hover {
-            background-color: #e9ecef !important; /* Slightly darker on hover */
-        }
+body {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+/* Header Styles */
+.header {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem 2rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: var(--sidebar-width);
+    z-index: 1000;
+    height: 70px;
+    transition: all 0.3s ease;
+}
+
+.header .dropdown-menu {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 0.5rem 0;
+}
+
+.header .dropdown-item {
+    padding: 0.5rem 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.header .dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    background: var(--dark-color);
+    transition: all 0.3s ease;
+    z-index: 1001;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.brand-container {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar .nav-link {
+    color: rgba(255,255,255,0.8);
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    color: white;
+    background-color: rgba(255,255,255,0.1);
+}
+
+.sidebar .nav-link i {
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar .collapse {
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 6px;
+}
+
+.sidebar .collapse .nav-link {
+    padding-left: 3rem;
+    font-size: 0.9rem;
+}
+
+.sidebar .fa-chevron-down {
+    transition: transform 0.3s ease;
+}
+
+.sidebar .nav-link[aria-expanded="true"] .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* Main Content Area */
+.content {
+    margin-left: var(--sidebar-width);
+    margin-top: 70px;
+    padding: 2rem;
+    min-height: calc(100vh - 70px);
+    transition: all 0.3s ease;
+}
+
+/* Cards and Widgets */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Tables */
+.table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.table thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.table th {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 1rem;
+}
+
+.table td {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-success {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-success:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+    border-color: var(--warning-color);
+    color: white;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 1rem;
+    margin-left: var(--sidebar-width);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 0px;
+    }
+    
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    
+    .content, .header, .footer {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .header {
+        left: 0;
+    }
+}
+
+/* Animation for Dropdowns */
+.collapse {
+    transition: all 0.2s ease-out;
+}
+
+.collapsing {
+    transition: all 0.2s ease-out;
+}
+
+/* Hover Effects */
+.btn-link {
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    opacity: 0.8;
+}
+
+/* Notification Badge Animation */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.badge {
+    animation: pulse 2s infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Additional Modern Elements */
+.stat-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.stat-card h3 {
+    color: var(--dark-color);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.stat-card .number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.content > * {
+    animation: fadeIn 0.5s ease-out;
+}
         
    
