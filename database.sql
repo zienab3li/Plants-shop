@@ -73,6 +73,7 @@ CREATE TABLE inventory (
     last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
+
 CREATE TABLE contact_messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -80,5 +81,17 @@ CREATE TABLE contact_messages (
     message TEXT NOT NULL,
     want_to_sell ENUM('Yes', 'No') NOT NULL DEFAULT 'No',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Notifications Table
+CREATE TABLE notifications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    type VARCHAR(50) NOT NULL,
+    message TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    link VARCHAR(255),
+    admin_id INT,
+    FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE CASCADE
 );
 

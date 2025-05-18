@@ -3,6 +3,7 @@ session_start();
 require_once "./shared/header.php";
 require_once "./shared/navbar.php";
 require_once "./app/dbconfig.php"; // Make sure you have a database connection file
+require_once "./app/notifications.php"; // Add notifications support
 
 // Redirect if cart is empty
 if (empty($_SESSION['cart'])) {
@@ -40,6 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" ) {
         $stmt = $conn->prepare("INSERT INTO payments (order_id, user_id, amount, payment_method) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("iids", $order_id, $user_id, $totalPrice, $payment_method);
         $stmt->execute();
+
+        // Create notification for admin
+        createNotification(
+            'new_order',
+            "New order #$order_id has been placed for $" . number_format($totalPrice, 2),
+            "/Plants-shop/dashboard/orders/details.php?id=$order_id"
+        );
 
         // Commit the transaction
         $conn->commit();
