@@ -9,11 +9,16 @@ require_once "../../app/dbconfig.php";
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Create images directory if it doesn't exist
+$upload_dir = __DIR__ . "/../assets/images";
+if (!file_exists($upload_dir)) {
+    mkdir($upload_dir, 0777, true);
+}
+
 // Check if product ID is set
 if (!isset($_GET['edit']) || empty($_GET['edit'])) {
     echo "<script>window.location.href='list.php';</script>";
     exit;
-    
 }
 
 $product_id = $_GET['edit'];
@@ -37,7 +42,6 @@ $result = mysqli_query($conn, $selectQuery);
 $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 // Handle form submission
-// Handle form submission
 if (isset($_POST['update'])) {
     $name = mysqli_real_escape_string($conn, $_POST['product_name']);
     $price = $_POST['price'];
@@ -48,11 +52,6 @@ if (isset($_POST['update'])) {
 
     $image_name = $product['image']; // Keep old image by default
 
-    // Debugging: Check if file is received
-    echo "<pre>";
-    var_dump($_FILES['product_image']);
-    echo "</pre>";
-
     // If a new image is uploaded
     if ($image['error'] === 0) {
         $imageExt = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
@@ -60,32 +59,24 @@ if (isset($_POST['update'])) {
 
         if (in_array($imageExt, $allowedExts)) {
             $newImageName = uniqid("product_", true) . "." . $imageExt;
-            $uploadPath = "/var/www/html/projects/MY_SHOP/dashboard/assets/images/" . $newImageName; // ✅ Fixed Path
-
-            // Debugging: Check if upload path is correct
-            echo "Upload Path: $uploadPath<br>";
+            $uploadPath = $upload_dir . "/" . $newImageName;
 
             if (move_uploaded_file($image['tmp_name'], $uploadPath)) {
                 // Delete old image if it exists
                 if (!empty($product['image'])) {
-                    $oldImagePath = "/var/www/html/projects/MY_SHOP/dashboard/assets/images/" . $product['image'];
+                    $oldImagePath = $upload_dir . "/" . $product['image'];
                     if (file_exists($oldImagePath)) {
                         unlink($oldImagePath);
                     }
                 }
-                $image_name = $newImageName; // ✅ Update with new image
+                $image_name = $newImageName;
             } else {
-                echo "<div class='alert alert-danger'>❌ Failed to upload new image.</div>";
+                echo "<div class='alert alert-danger'>Failed to upload new image. Error: " . error_get_last()['message'] . "</div>";
             }
         } else {
-            echo "<div class='alert alert-danger'>❌ Invalid file type. Only JPG, JPEG, PNG are allowed.</div>";
+            echo "<div class='alert alert-danger'>Invalid file type. Only JPG, JPEG, PNG are allowed.</div>";
         }
-    } else {
-        echo "<div class='alert alert-warning'>⚠️ No new image uploaded.</div>";
     }
-
-    // Debugging: Check final image name before updating
-    echo "Final Image Name: $image_name<br>";
 
     // Update product details
     $updateQuery = "UPDATE products SET name = ?, description = ?, price = ?, category_id = ?, stock = ?, image = ? WHERE id = ?";
@@ -93,15 +84,13 @@ if (isset($_POST['update'])) {
     $stmt->bind_param("ssdissi", $name, $description, $price, $category_id, $stock, $image_name, $product_id);
 
     if ($stmt->execute()) {
-        echo "<div class='alert alert-success'>✅ Product updated successfully!</div>";
+        echo "<div class='alert alert-success'>Product updated successfully!</div>";
         echo "<script>window.location.href='list.php';</script>";
         exit;
     } else {
-        echo "<div class='alert alert-danger'>❌ Database Error: " . mysqli_error($conn) . "</div>";
+        echo "<div class='alert alert-danger'>Database Error: " . mysqli_error($conn) . "</div>";
     }
 }
-
-
 ?>
 
 <main class="col-md-10 content p-4">

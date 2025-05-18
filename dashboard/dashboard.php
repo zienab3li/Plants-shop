@@ -111,6 +111,30 @@ foreach ($topProductsData as $product) {
         </div>
 
         <!-- Top Products List -->
+        <style>
+        .product-card {
+            transition: transform 0.2s;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .product-image-container {
+            width: 120px;
+            height: 120px;
+            overflow: hidden;
+        }
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        </style>
+
         <div class="card mb-4">
             <div class="card-header bg-white">
                 <h5 class="card-title mb-0"><i class="fas fa-trophy me-2"></i>Top Performing Products</h5>
@@ -119,18 +143,20 @@ foreach ($topProductsData as $product) {
                 <div class="row">
                     <?php foreach ($topProductsData as $index => $product): ?>
                         <div class="col-md-4 mb-3">
-                            <div class="card h-100" style="max-height: 120px;">
+                            <div class="product-card">
                                 <div class="row g-0">
                                     <div class="col-4">
-                                        <img src="/Plants-shop/dashboard/assets/images/<?php echo $product['image']; ?>" 
-                                             class="img-fluid rounded-start" alt="<?php echo htmlspecialchars($product['name']); ?>"
-                                             style="height: 120px; object-fit: cover;">
+                                        <div class="product-image-container">
+                                            <img src="/Plants-shop/dashboard/assets/images/<?php echo htmlspecialchars($product['image']); ?>" 
+                                                 class="product-image" 
+                                                 alt="<?php echo htmlspecialchars($product['name']); ?>">
+                                        </div>
                                     </div>
                                     <div class="col-8">
                                         <div class="card-body py-2">
-                                            <h6 class="card-title mb-1" style="font-size: 0.9rem;"><?php echo htmlspecialchars($product['name']); ?></h6>
+                                            <h6 class="card-title mb-1"><?php echo htmlspecialchars($product['name']); ?></h6>
                                             <p class="card-text mb-0">
-                                                <small class="text-muted" style="font-size: 0.8rem;">
+                                                <small class="text-muted">
                                                     Sold: <?php echo $product['total_quantity']; ?> units<br>
                                                     Revenue: $<?php echo number_format($product['total_revenue'], 2); ?>
                                                 </small>
