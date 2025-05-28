@@ -43,58 +43,7 @@ body {
 }
 
 /* Sidebar Styles */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: var(--sidebar-width);
-    background: var(--dark-color);
-    transition: all 0.3s ease;
-    z-index: 1001;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-}
 
-.brand-container {
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.sidebar .nav-link {
-    color: rgba(255,255,255,0.8);
-    padding: 0.8rem 1rem;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    font-size: 0.95rem;
-}
-
-.sidebar .nav-link:hover,
-.sidebar .nav-link.active {
-    color: white;
-    background-color: rgba(255,255,255,0.1);
-}
-
-.sidebar .nav-link i {
-    width: 20px;
-    text-align: center;
-}
-
-.sidebar .collapse {
-    background-color: rgba(0,0,0,0.1);
-    border-radius: 6px;
-}
-
-.sidebar .collapse .nav-link {
-    padding-left: 3rem;
-    font-size: 0.9rem;
-}
-
-.sidebar .fa-chevron-down {
-    transition: transform 0.3s ease;
-}
-
-.sidebar .nav-link[aria-expanded="true"] .fa-chevron-down {
-    transform: rotate(180deg);
-}
 
 /* Main Content Area */
 .content {

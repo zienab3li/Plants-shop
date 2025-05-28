@@ -1,9 +1,10 @@
 <?php
+ob_start(); // Start output buffering
 session_start();
 require_once "./shared/header.php";
 require_once "./shared/navbar.php";
-require_once "./app/dbconfig.php"; // Make sure you have a database connection file
-require_once "./app/notifications.php"; // Add notifications support
+require_once "./app/dbconfig.php";
+require_once "./app/notifications.php";
 
 // Redirect if cart is empty
 if (empty($_SESSION['cart'])) {
@@ -18,8 +19,8 @@ foreach ($_SESSION['cart'] as $product) {
 }
 
 // Process order submission
-if ($_SERVER['REQUEST_METHOD'] == "POST" ) {
-    $user_id = $_SESSION['user_id']; // Ensure user is logged in and has an ID
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $user_id = $_SESSION['user_id'];
     $payment_method = $_POST['payment_method'];
 
     $conn->begin_transaction();
@@ -28,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" ) {
         $stmt = $conn->prepare("INSERT INTO orders (user_id, total) VALUES (?, ?)");
         $stmt->bind_param("id", $user_id, $totalPrice);
         $stmt->execute();
-        $order_id = $stmt->insert_id; // Get the last inserted order ID
+        $order_id = $stmt->insert_id;
 
         // Insert order items
         $stmt = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
@@ -61,13 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" ) {
     } catch (Exception $e) {
         $conn->rollback();
         echo "Error placing order: " . $e->getMessage();
+        exit;
     }
 }
+ob_end_flush(); // End output buffering
 ?>
-
 <div class="container mt-5">
     <h2 class="text-center mb-4">Checkout</h2>
-    
     <table class="table table-bordered">
         <thead class="table-dark">
             <tr>
@@ -88,9 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" ) {
             <?php endforeach; ?>
         </tbody>
     </table>
-
     <h4 class="text-end">Total: $<?php echo number_format($totalPrice, 2); ?></h4>
-
     <form method="POST" class="mt-4">
         <h5>Select Payment Method:</h5>
         <div class="form-check">
@@ -105,11 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" ) {
             <input class="form-check-input" type="radio" name="payment_method" value="cash_on_delivery">
             <label class="form-check-label">Cash on Delivery</label>
         </div>
-
         <div class="text-center mt-4 mb-5">
             <button type="submit" class="btn btn-success btn-lg">Place Order</button>
         </div>
     </form>
 </div>
-
 <?php require_once "./shared/footer.php"; ?>
