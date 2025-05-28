@@ -40,6 +40,11 @@ $cartCount = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart']
         width: 100% !important;
         margin: 5px 0 !important;
     }
+
+    .search-form {
+        width: 100%;
+        margin-bottom: 10px;
+    }
 }
 
 .navbar {
@@ -64,6 +69,34 @@ $cartCount = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart']
 .nav-link:hover {
     color: #2ecc71 !important;
 }
+
+.search-form {
+    position: relative;
+    margin-right: 15px;
+}
+
+.search-form .form-control {
+    padding-right: 40px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.search-form .search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #2ecc71;
+    cursor: pointer;
+    padding: 0;
+}
+
+.search-form .search-btn:hover {
+    color: #27ae60;
+}
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 fixed-top">
@@ -79,8 +112,14 @@ $cartCount = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart']
                 <li class="nav-item"><a class="nav-link" href="./contact.php">Contact</a></li>
                 <li class="nav-item"><a class="nav-link" href="./aboutus.php">About Us</a></li>
             </ul>
-            
+            <form class="search-form" action="search.php" method="GET">
+                    <input type="text" class="form-control" name="query" placeholder="Search..." required>
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             <div class="user-actions">
+                
                 <?php if(isset($_SESSION['user'])):?>
                     <a href="/Plants-shop/cart.php" class="btn btn-outline-success position-relative cart-button">
                         <i class="fas fa-shopping-cart"></i> Cart
